@@ -4,10 +4,13 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/e1y8l6w9bjcuwame?svg=true)](https://ci.appveyor.com/project/AustinPrivett/matrixchainmultiply-jl)
 [![Coverage Status](https://coveralls.io/repos/github/AustinPrivett/MatrixChainMultiply.jl/badge.svg?branch=master)](https://coveralls.io/github/AustinPrivett/MatrixChainMultiply.jl?branch=master)
 
-The cost of multiplying a chain of matrices can vary significantly depending on the order in which the multiplication steps are applied. The [Matrix chain multiplication](https://www.wikiwand.com/en/Matrix_chain_multiplication) algorithm applied here (described in *Introduction to Algorithms, 3rd Edition* by Cormen et al.) finds the optimal multiplication sequence.
+If a computational scientist is not careful, the cost of multiplying a chain of matrices can vary significantly (e.g., by 1-2 orders of magnitude in real problems) depending on the order in which the multiplication steps are applied. The
+[Matrix chain multiplication](https://www.wikiwand.com/en/Matrix_chain_multiplication)
+algorithm applied here (described in *Introduction to Algorithms, 3rd Edition*
+by Cormen et al.) finds the optimal multiplication sequence.
 
 With Julia, it is easy to allow for specialization on the matrix types.
-For example, the types given in the ArrayFire.jl package or matrices of matrices (block matrices) should work, too.
+For example, the types given in the [ArrayFire.jl](https://github.com/JuliaComputing/ArrayFire.jl) package or matrices of matrices (block matrices) should work, too. To be clear, the `*(x, y)` that applies to a specific types of `x` and `y` is automatically used with Julia's multiple-dispatch system after the operation order is optimized.
 
 ## Installing this Package
 
@@ -61,7 +64,8 @@ not worth the (non-existing) benefit.
 * Recognize situations that don't need the analysis to eliminate the
   overhead (allowing for a more ubiquitous use of `matrixchainmultiply(...)`
   instead of `*(...)`).
-* For repeated uses, given some matrix size sequence, produce the
-  function a single time so that the analysis isn't done unnecessarily.
+* For repeated uses, given some matrix size sequence (so at run time), produce
+  the function a single time at run time so that the analysis isn't done
+  unnecessarily.
 * Faster or more general algorithms (i.e., those that apply to the general
   tensor problem) are certainly desirable if you would like to add them.
