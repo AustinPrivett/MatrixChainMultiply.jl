@@ -39,6 +39,8 @@ Note that the optional keyword argument `printout=true` prints out the
 optimal multiplication order and the number of FLOPS in case you want
 to investigate. It is `false` by default.
 
+## When to use this
+
 To test this package and see an example speedup on your system,
 
 ```julia
@@ -50,8 +52,6 @@ On my system, the `matrixchainmultiply(...)` generates results
 evaluates left-to-right instead of optimally). It is certainly
 possible to see speedups of one or two orders of magnitude through the
 use of the optimal operation order generated here.
-
-## When to use this
 
 If all matrices are the same size, the overhead of the optimization is
 not worth the (non-existing) benefit.
