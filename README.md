@@ -101,4 +101,4 @@ not worth the (non-existing) benefit.
 ## Similar Package
 
 It has come to my attention that another package implementing this
-is [DynMultiply.jl](https://github.com/LMescheder/DynMultiply.jl.).
+is [DynMultiply.jl](https://github.com/LMescheder/DynMultiply.jl).
