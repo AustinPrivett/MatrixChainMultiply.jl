@@ -29,5 +29,5 @@ end
 
 difference, speedup = readme_example()
 
-@test norm(difference) < 1e-7
+@test norm(difference) < 1e-5
 @test speedup > 1.0
