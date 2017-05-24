@@ -4,7 +4,7 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/e1y8l6w9bjcuwame?svg=true)](https://ci.appveyor.com/project/AustinPrivett/matrixchainmultiply-jl)
 [![Coverage Status](https://coveralls.io/repos/github/AustinPrivett/MatrixChainMultiply.jl/badge.svg?branch=master)](https://coveralls.io/github/AustinPrivett/MatrixChainMultiply.jl?branch=master)
 
-If a computational scientist is not careful, the cost of multiplying a chain of matrices can vary significantly (e.g., by 1-2 orders of magnitude in real problems) depending on the order in which the multiplication steps are applied. The
+The cost of multiplying a chain of matrices can vary significantly (e.g., by 1-2 orders of magnitude in real problems) depending on the order in which the multiplication steps are applied. The
 [Matrix chain multiplication](https://www.wikiwand.com/en/Matrix_chain_multiplication)
 algorithm applied here (described in *Introduction to Algorithms, 3rd Edition*
 by Cormen et al.) finds the optimal multiplication sequence.
@@ -27,15 +27,51 @@ added to the scope by writing:
 
 ```julia
 using MatrixChainMultiply
+using BenchmarkTools
 
-a = rand(1000)
-b = rand(1000,20)
-c = rand(20,4500)
-d = rand(4500)
-e = 29.3 / 380.2
+a = rand(1000,1000)
+b = rand(1000,100)
+c = rand(100, 500)
+d = rand(500)
 
-result1 = matrixchainmultiply(a',b,c,d,e; printout=true)
-result2 = *(a',b,c,d,e)
+@benchmark result1 = matrixchainmultiply(a,b,c,d)
+@benchmark result2 = *(a,b,c,d)
+```
+
+which gives
+
+```
+julia> @benchmark result1 = matrixchainmultiply(a,b,c,d)
+BenchmarkTools.Trial:
+  memory estimate:  18.45 KiB
+  allocs estimate:  42
+  --------------
+  minimum time:     265.715 μs (0.00% GC)
+  median time:      299.071 μs (0.00% GC)
+  mean time:        329.042 μs (0.16% GC)
+  maximum time:     4.162 ms (74.04% GC)
+  --------------
+  samples:          10000
+  evals/sample:     1
+
+julia> @benchmark result2 = *(a,b,c,d)
+BenchmarkTools.Trial:
+  memory estimate:  4.59 MiB
+  allocs estimate:  5
+  --------------
+  minimum time:     4.178 ms (0.00% GC)
+  median time:      4.765 ms (0.00% GC)
+  mean time:        5.281 ms (8.05% GC)
+  maximum time:     11.310 ms (18.85% GC)
+  --------------
+  samples:          944
+  evals/sample:     1
+```
+
+You can see the optimal ordering and the cost of the operation
+
+```
+matrixchainmultiply(a',b,c,d; printout=true)
 ```
 
 Note that the optional keyword argument `printout=true` prints out the
@@ -44,15 +80,7 @@ to investigate. It is `false` by default.
 
 ## When to use this
 
-To test this package and see an example speedup on your system,
-
-```julia
-Pkg.test("MatrixChainMultiply")
-```
-
-On my system, the `matrixchainmultiply(...)` generates results
-**~17.4 times faster** than the standard Julia `*(...)` function when 
-running `Pkg.test("MatrixChainMultiply")`. It is certainly
+It is certainly
 possible to see speedups of one or two orders of magnitude through the
 use of the optimal operation order generated here.
 
