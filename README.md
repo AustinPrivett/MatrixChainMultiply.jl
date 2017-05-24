@@ -51,8 +51,8 @@ Pkg.test("MatrixChainMultiply")
 ```
 
 On my system, the `matrixchainmultiply(...)` generates results
-**~17.4 times faster** than the standard Julia `*(...)` function (which
-evaluates left-to-right instead of optimally). It is certainly
+**~17.4 times faster** than the standard Julia `*(...)` function when 
+running `Pkg.test("MatrixChainMultiply")`. It is certainly
 possible to see speedups of one or two orders of magnitude through the
 use of the optimal operation order generated here.
 
@@ -69,3 +69,8 @@ not worth the (non-existing) benefit.
   unnecessarily.
 * Faster or more general algorithms (i.e., those that apply to the general
   tensor problem) are certainly desirable if you would like to add them.
+  
+## Similar Package
+
+It has come to my attention that another package implementing this
+is [DynMultiply.jl](https://github.com/LMescheder/DynMultiply.jl.).
