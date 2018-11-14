@@ -20,15 +20,20 @@ function matrixchainmultiply(A...)
   m, s, n = mcm_cost_matrices(p)
   mcm_compute(s, 1, n, A...)
 end
+
 """
   `matrixchainmultiply(fn_name::String, A...)`
 
 Print out the optimal matrix order as an expresion and its
 cost. Also use this to...
 
-Construc a function for repeated use (Julia v0.6-?)
----------------------------------------------------
-Sometimes, you will do a chain multiplication many times with matrices of the same size. Another use case for this is to do the analysis on the CPU but use the generated function on the GPU. In either case, you only need to find the optimal order and JIT compile that function once. To save this function to the global scope:
+Construct a function for repeated use
+-------------------------------------
+
+Sometimes, you will do a chain multiplication many times with matrices of the same size.
+Another use case for this is to do the analysis on the CPU but use the generated function on the GPU.
+In either case, you only need to find the optimal order and JIT compile that function once.
+To save this function to the global scope:
 
 ```julia
 a = rand(Float32, 10000,2000)
@@ -51,6 +56,7 @@ mcm_abc(aa,ab,ac)  # no new analysis; ke
 function matrixchainmultiply(fn_name::String, A...)
   matrixchainmultiply_fn(fn_name, A...)
 end
+
 function matrixchainmultiply_fn(fn_name::String, A...)
   p = mcm_makep(A...)
   m, s, n = mcm_cost_matrices(p)
@@ -160,9 +166,9 @@ Matrix-style sizes. Return type looks like `(i,j)` where `i` and `j` are `Ints`.
 If other packages with matrix types (e.g., OpenCl or ArrayFire) inherit from
 AbstractArray, there shouldn't be issues with other packages using this one.
 """
-msize{T}(m::AbstractArray{T,2}) = size(m)
-msize{T}(v::AbstractArray{T,1}) = (size(v)[1], 1)
-msize{T<:Number}(s::T) = (1, 1)
+msize(m::AbstractArray{T,2}) where {T} = size(m)
+msize(v::AbstractArray{T,1}) where {T} = (size(v)[1], 1)
+msize(s::T) where {T<:Number} = (1, 1)
 
 
 end # module
