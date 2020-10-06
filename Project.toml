@@ -1,0 +1,16 @@
+name = "MatrixChainMultiply"
+uuid = "f01a5c79-138a-571d-9c23-7d209c0b0a14"
+authors = ["Austin Privett"]
+version = "0.1.0"
+
+[deps]
+
+[compat]
+julia = "1.0"
+
+[extras]
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["LinearAlgebra", "Test"]

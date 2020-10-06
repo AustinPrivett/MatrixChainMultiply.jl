@@ -17,7 +17,7 @@ For example, the types given in the [ArrayFire.jl](https://github.com/JuliaCompu
 Since this package is not registered, you must install it by cloning. To add this package, use:
 
 ```julia
-Pkg.clone("https://github.com/AustinPrivett/MatrixChainMultiply.jl")
+Pkg.add(url="https://github.com/AustinPrivett/MatrixChainMultiply.jl")
 ```
 
 ## Using this Package
