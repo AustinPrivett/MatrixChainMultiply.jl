@@ -1,5 +1,5 @@
 using MatrixChainMultiply
-using Base.Test
+using Test, LinearAlgebra
 
 # case on readme
 function readme_example(use_arrayfire=false)
@@ -19,8 +19,12 @@ function readme_example(use_arrayfire=false)
   difference = result1 - result2
 
   # do again to get timings
-  tic(); *(a,b,c,d); stdtime = toc()
-  tic(); matrixchainmultiply(a,b,c,d); chaintime = toc()
+  t1 = time()
+  *(a,b,c,d);
+  stdtime = time() - t1
+  t2 = time()
+  matrixchainmultiply(a,b,c,d);
+  chaintime = time() - t2
   speedup = stdtime / chaintime
   print("Speedup = $speedup")
 

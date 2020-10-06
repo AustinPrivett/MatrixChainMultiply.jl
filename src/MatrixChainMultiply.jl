@@ -160,9 +160,9 @@ Matrix-style sizes. Return type looks like `(i,j)` where `i` and `j` are `Ints`.
 If other packages with matrix types (e.g., OpenCl or ArrayFire) inherit from
 AbstractArray, there shouldn't be issues with other packages using this one.
 """
-msize{T}(m::AbstractArray{T,2}) = size(m)
-msize{T}(v::AbstractArray{T,1}) = (size(v)[1], 1)
-msize{T<:Number}(s::T) = (1, 1)
+msize(m::AbstractMatrix) = size(m)
+msize(v::AbstractVector) = (size(v,1), 1)
+msize(s::Number) = (1, 1)
 
 
 end # module
